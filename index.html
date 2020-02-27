@@ -1,114 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hostile-aliens</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alien Invasion</title>
 </head>
-
 <body>
-    <main>
-        <h1 style="text-align: center;color: green;">Hostile aliens</h1>
-        <div style="text-align: center;">
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 500px;height: 50px;">Mother
-                ship - 100hp</span>
-        </div>
-        <div style="display: flex; justify-content: space-evenly;">
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 200px;height: 40px;">Defence
-                ship - 80hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 200px;height: 40px;">Defence
-                ship - 80hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 200px;height: 40px;">Defence
-                ship - 80hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 200px;height: 40px;">Defence
-                ship - 80hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 200px;height: 40px;">Defence
-                ship - 80hp</span>
-        </div>
-        <div style="display: flex;justify-content: space-evenly;">
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-            <span
-                style="text-align: center;color: red;display: inline-block;border: solid black 2px;width: 100px;height: 40px;">Attack
-                ship - 45hp</span>
-        </div>
-        <form style="display: flex;justify-content: center;">
-            <input style="width: 200px;height: 100px;color: black;" type="button" id="destroy"
-                value="Destroy aliens - click me">
-        </form>
-    </main>
+    <section id="buttons">
+        <button type="reset" id="start" onclick="startResetGame()">Start</button>
+        <button type="button" id="fire" onclick="attackShip()">Fire!</button>
+    </section>
+    <section id="alienShipContainer">
+        <div id="mother-ship" class="alien-ship"></div>
+        <div id="defence-ships" class="flex-row alien-ship"></div>
+        <div id="attack-ships" class="flex-row alien-ship"></div>
+    </section>
+    <body>
+        <main>
+            <script async defer>
+                class Ship {
+                    constructor(name, hitPoints, cssID, takesDamage) { // constructor
+                        this.name = name;  // properties of ship
+                        this.hitPoints = hitPoints; 
+                        this.cssID = cssID;
+                        this.takesDamage = takesDamage;
+                    }
+                    printShip() { // method that prints a ship
+                        const showShip = `<p class="${this.cssID}"> ${this.name} - HP: ${this.hitPoints}</p>`; // variable that output the text
+                        document.getElementById(this.cssID).innerHTML += showShip; // 
+                    }
+                    takeHit() { // method that describes the damage taken
+                        this.hitPoints = this.hitPoints-this.takesDamage;
+                    }            
+                }
+                class MotherShip extends Ship { // extensions to the class Ship  
+                    constructor(name, hitPoints, cssID, takesDamage) { // extensions to the class Ship
+                        super (name, hitPoints, cssID, takesDamage); // extensions to the class Ship
+                    }
+                }
+                class DefenceShip extends Ship { // extensions to the class Ship
+                    constructor(name, hitPoints, cssID, takesDamage) { // extensions to the class Ship
+                        super (name, hitPoints, cssID, takesDamage); // extensions to the class Ship
+                    }
+                }
+                class AttackShip extends Ship { // extensions to the class Ship
+                    constructor(name, hitPoints, cssID, takesDamage) { // extensions to the class Ship
+                        super (name, hitPoints, cssID, takesDamage); // extensions to the class Ship
+                    }
+                }
+                let allShips = []; 
 
-    <script>
-        class MotherShip {
-            constructor() {
-                this.hitPoints = 100;
-            }
-            takeHit() {
-                this.hitPoints = this.hitPoints - 9;
-            }
-        }
+                const createShips = () => { 
+                    allShips[0] = new MotherShip("Mother Ship", 100, "mother-ship", 9);
+                    for (let index = 1; index < 6; index++) {
+                        allShips[index] = new DefenceShip("Defence Ship", 80, "defence-ships", 10);
+                    }
+                    for (let index = 6; index < 14; index++) {
+                        allShips[index] = new AttackShip("Attack Ship", 45, "attack-ships", 12);
+                    }
+                    return allShips;
+                }
 
-        class DefenceShip {
-            constructor() {
-                this.hitPoints = 80;
-            }
-            takeHit() {
-                this.hitPoints = this.hitPoints - 10;
-            }
-        }
+                const attackShip = () => {
+                    const randomShipIndex = Math.floor(Math.random() * allShips.length);
+                    allShips[randomShipIndex].takeHit();
+                    if (allShips[0].hitPoints <= 0) {
+                        allShips=[];
+                    }
+                    allShips = allShips.filter(ship => ship.hitPoints > 0);
+                    printShips();
+                }
 
-        class AttackShip {
-            constructor() {
-                this.hitPoints = 45;
-            }
-            takeHit() {
-                this.hitPoints = this.hitPoints - 12;
-            }
-        }
+                const printShips = () => {
+                     document.getElementById('mother-ship').innerHTML = "";
+                     document.getElementById('attack-ships').innerHTML = "";
+                     document.getElementById('defence-ships').innerHTML = "";
+                    allShips.forEach(ship => ship.printShip());
+                }
 
-        const motherShip = new MotherShip(100);
-        const defenceShip0 = new DefenceShip(80);
-        const defenceShip1 = new DefenceShip(80);
-        const defenceShip2 = new DefenceShip(80);
-        const defenceShip3 = new DefenceShip(80);
-        const defenceShip4 = new DefenceShip(80);
-        const atackShip0 = new AttackShip(45);
-        const atackShip1 = new AttackShip(45);
-        const atackShip2 = new AttackShip(45);
-        const atackShip3 = new AttackShip(45);
-        const atackShip4 = new AttackShip(45);
-        const atackShip5 = new AttackShip(45);
-        const atackShip6 = new AttackShip(45);
-        const atackShip7 = new AttackShip(45);
-
-        const ships = [motherShip, defenceShip0, atackShip0];
-    </script>
-</body>
+                const startResetGame = () => {
+                    createShips();
+                    printShips();
+                }
+            </script>
+        </main>
+    </body>
 
 </html>
