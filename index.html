@@ -20,10 +20,9 @@
         <main>
             <script async defer>
                 class Ship {
-                    constructor(name, hitPoints, cssID, takesDamage) { // constructor
+                    constructor(name, hitPoints, takesDamage) { // constructor
                         this.name = name;  // properties of ship
                         this.hitPoints = hitPoints; 
-                        this.cssID = cssID;
                         this.takesDamage = takesDamage;
                     }
                     printShip() { // method that prints a ship
@@ -51,6 +50,7 @@
                 const attackShip = () => {
                     const randomShipIndex = Math.floor(Math.random() * allShips.length);
                     allShips[randomShipIndex].takeHit();
+
                     if (allShips[0].hitPoints <= 0) {
                         allShips=[];
                     }
