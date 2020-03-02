@@ -12,9 +12,9 @@
         <button type="button" id="fire" onclick="attackShip()">Fire!</button>
     </section>
     <section id="alienShipContainer">
-        <div id="mother-ship" class="alien-ship"></div>
-        <div id="defence-ships" class="flex-row alien-ship"></div>
-        <div id="attack-ships" class="flex-row alien-ship"></div>
+        <div id="mother-ship"></div>
+        <div id="defence-ships"></div>
+        <div id="attack-ships"></div>
     </section>
     <body>
         <main>
@@ -27,28 +27,14 @@
                         this.takesDamage = takesDamage;
                     }
                     printShip() { // method that prints a ship
-                        const showShip = `<p class="${this.cssID}"> ${this.name} - HP: ${this.hitPoints}</p>`; // variable that output the text
+                        const showShip = `<p class="${this.cssID}"> ${this.name} - HP: ${this.hitPoints}</p>`; // variable that output the ship
                         document.getElementById(this.cssID).innerHTML += showShip; // 
                     }
                     takeHit() { // method that describes the damage taken
                         this.hitPoints = this.hitPoints-this.takesDamage;
                     }            
                 }
-                class MotherShip extends Ship { // extensions to the class Ship  
-                    constructor(name, hitPoints, cssID, takesDamage) { // extensions to the class Ship
-                        super (name, hitPoints, cssID, takesDamage); // extensions to the class Ship
-                    }
-                }
-                class DefenceShip extends Ship { // extensions to the class Ship
-                    constructor(name, hitPoints, cssID, takesDamage) { // extensions to the class Ship
-                        super (name, hitPoints, cssID, takesDamage); // extensions to the class Ship
-                    }
-                }
-                class AttackShip extends Ship { // extensions to the class Ship
-                    constructor(name, hitPoints, cssID, takesDamage) { // extensions to the class Ship
-                        super (name, hitPoints, cssID, takesDamage); // extensions to the class Ship
-                    }
-                }
+                
                 let allShips = []; 
 
                 const createShips = () => { 
@@ -86,5 +72,4 @@
             </script>
         </main>
     </body>
-
 </html>
