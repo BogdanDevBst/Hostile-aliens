@@ -1,75 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Alien Invasion</title>
-</head>
-<body>
-    <section id="buttons">
-        <button type="reset" id="start" onclick="startResetGame()">Start</button>
-        <button type="button" id="fire" onclick="attackShip()">Fire!</button>
-    </section>
-    <section id="alienShipContainer">
-        <div id="mother-ship"></div>
-        <div id="defence-ships"></div>
-        <div id="attack-ships"></div>
-    </section>
-    <body>
-        <main>
-            <script async defer>
-                class Ship {
-                    constructor(name, hitPoints, takesDamage) { // constructor
-                        this.name = name;  // properties of ship
-                        this.hitPoints = hitPoints; 
-                        this.takesDamage = takesDamage;
-                    }
-                    printShip() { // method that prints a ship
-                        const showShip = `<p class="${this.cssID}"> ${this.name} - HP: ${this.hitPoints}</p>`; // variable that output the ship
-                        document.getElementById(this.cssID).innerHTML += showShip; // 
-                    }
-                    takeHit() { // method that describes the damage taken
-                        this.hitPoints = this.hitPoints-this.takesDamage;
-                    }            
-                }
-                
-                let allShips = []; 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Alien Invasion</title>
+  <body>
+    <head>
+      <section id="alienShipContainer">
+        <div id="mother-ship" class="alien-ship"></div>
+        <div id="defence-ships" class="flex-row alien-ship"></div>
+        <div id="attack-ships" class="flex-row alien-ship"></div>
+      </section>
+      <section id="buttons">
+        <h2 id="start" onclick="startResetGame()">Start</h2>
+        <h2 id="fire" onclick="attackShip()">Fire!</h2>
+      </section>
+    </head>
+    <style type="text/css">
+      * {
+        padding: 0;
+      }
 
-                const createShips = () => { 
-                    allShips[0] = new MotherShip("Mother Ship", 100, "mother-ship", 9);
-                    for (let index = 1; index < 6; index++) {
-                        allShips[index] = new DefenceShip("Defence Ship", 80, "defence-ships", 10);
-                    }
-                    for (let index = 6; index < 14; index++) {
-                        allShips[index] = new AttackShip("Attack Ship", 45, "attack-ships", 12);
-                    }
-                    return allShips;
-                }
+      h2 {
+        padding: 5px;
+        margin: 0 40px;
+        border: solid 2px grey;
+        border-radius: 50px;
+        cursor: crosshair;
+      }
 
-                const attackShip = () => {
-                    const randomShipIndex = Math.floor(Math.random() * allShips.length);
-                    allShips[randomShipIndex].takeHit();
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
 
-                    if (allShips[0].hitPoints <= 0) {
-                        allShips=[];
-                    }
-                    allShips = allShips.filter(ship => ship.hitPoints > 0);
-                    printShips();
-                }
+      #alienShipContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 85vh;
+        background-image: url("./pics/background.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: auto;
+      }
 
-                const printShips = () => {
-                     document.getElementById('mother-ship').innerHTML = "";
-                     document.getElementById('attack-ships').innerHTML = "";
-                     document.getElementById('defence-ships').innerHTML = "";
-                    allShips.forEach(ship => ship.printShip());
-                }
+      #buttons {
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+      }
 
-                const startResetGame = () => {
-                    createShips();
-                    printShips();
-                }
-            </script>
-        </main>
-    </body>
+      p {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center top;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        flex-wrap: nowrap;
+        margin: 50 15px;
+        font-size: 20px;
+      }
+
+      #mother-ship p {
+        width: 10vw;
+        height: 15vw;
+        background-image: url("./pics/alien-queen-mother.png");
+        border: solid black 3px;
+      }
+
+      #defence-ships p {
+        width: 10vw;
+        height: 7vw;
+        background-image: url("./pics/defender.png");
+        border: solid black 3px;
+      }
+
+      #attack-ships p {
+        width: 8vw;
+        height: 11vw;
+        background-image: url("./pics/attack-ship.png");
+        border: solid black 3px;
+      }
+
+      .flex-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 20px;
+      }
+    </style>
+    <script async defer>
+      class Ship {
+        constructor(name, hitPoints, cssID, takesDamage) {
+          this.name = name;
+          this.hitPoints = hitPoints;
+          this.cssID = cssID;
+          this.takesDamage = takesDamage;
+        }
+
+        printShip() {
+          const showShip = `<p id="${this.cssID}">HP: ${this.hitPoints}</p>`;
+          document.getElementById(this.cssID).innerHTML += showShip;
+        }
+
+        takeHit() {
+          this.hitPoints = this.hitPoints - this.takesDamage;
+        }
+      }
+
+      class MotherShip extends Ship {
+        constructor(name, hitPoints, cssID, takesDamage) {
+          super(name, hitPoints, cssID, takesDamage);
+        }
+      }
+
+      class DefenceShip extends Ship {
+        constructor(name, hitPoints, cssID, takesDamage) {
+          super(name, hitPoints, cssID, takesDamage);
+        }
+      }
+
+      class AttackShip extends Ship {
+        constructor(name, hitPoints, cssID, takesDamage) {
+          super(name, hitPoints, cssID, takesDamage);
+        }
+      }
+
+      let allShips = [];
+
+      const createShips = () => {
+        allShips[0] = new MotherShip("Mother Ship", 100, "mother-ship", 9);
+        for (let index = 1; index < 6; index++) {
+          allShips[index] = new DefenceShip(
+            "Defence Ship",
+            80,
+            "defence-ships",
+            10
+          );
+        }
+        for (let index = 6; index < 14; index++) {
+          allShips[index] = new AttackShip(
+            "Attack Ship",
+            45,
+            "attack-ships",
+            12
+          );
+        }
+        return allShips;
+      };
+
+      const attackShip = () => {
+        const randomShipIndex = Math.floor(Math.random() * allShips.length);
+        allShips[randomShipIndex].takeHit();
+        if (allShips[0].hitPoints <= 0) {
+          allShips = [];
+        }
+        allShips = allShips.filter(ship => ship.hitPoints > 0);
+        printShips();
+      };
+
+      const printShips = () => {
+        document.getElementById("mother-ship").innerHTML = "";
+        document.getElementById("attack-ships").innerHTML = "";
+        document.getElementById("defence-ships").innerHTML = "";
+        allShips.forEach(ship => ship.printShip());
+      };
+
+      const startResetGame = () => {
+        createShips();
+        printShips();
+      };
+    </script>
+  </body>
 </html>
