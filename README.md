@@ -20,9 +20,9 @@ Deployed via github pages.
 
 ## Build with
 
-HTML5 - Templating
-JavaScript ES6 - Functionality
-CSS3 - Styling
+HTML5,
+JavaScript and
+CSS3 
 
 ## Authors
 
